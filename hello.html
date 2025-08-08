@@ -1,1 +1,58 @@
-is this working?
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bhagavad Gita Quote</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            text-align: center;
+            background: #f9f9f9;
+        }
+        #slok {
+            font-size: 18px;
+            font-style: italic;
+            color: #333;
+        }
+        #translation {
+            margin: 15px 0;
+            color: #555;
+        }
+        #chapter {
+            font-weight: bold;
+        }
+        button {
+            background: #FFD700;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bhagavad Gita Quote</h2>
+    <div id="slok">Loading...</div>
+    <div id="translation"></div>
+    <div id="chapter"></div>
+    <button onclick="fetchQuote()">New Verse</button>
+
+    <script>
+        async function fetchQuote() {
+            try {
+                const response = await fetch("https://bhagavadgitaapi.in/random/");
+                const data = await response.json();
+                
+                document.getElementById("slok").textContent = `"${data.slok}"`;
+                document.getElementById("translation").textContent = data.translation;
+                document.getElementById("chapter").textContent = `— Chapter ${data.chapter}, Verse ${data.verse}`;
+            } catch (error) {
+                document.getElementById("slok").textContent = "Failed to load. Refresh the page.";
+            }
+        }
+
+        // Load a quote on page start
+        window.onload = fetchQuote;
+    </script>
+</body>
+</html>
